@@ -1,0 +1,100 @@
+<view class="franchisee-detail-wrap page" id="franchiseeDetail">
+  <view class="franchisee-cover-container" style="width:{{ franchiseeCoverWidth }}px; height:{{ franchiseeCoverHeight }}px;" wx:if="{{ !franchiseeInfo.carousel_imgs }}">
+    <image src="{{ franchiseeInfo.picture }}" mode="aspectFill" onload="franchiseeCoverOnload"></image>
+  </view>
+  <view class="slick-carousel-container" wx:else>
+    <swiper indicator-dots="true" autoplay="true" circular="true" interval="5000" duration="1000" indicator-active-color="#eee">
+      <block wx:for="{{ franchiseeInfo.carousel_imgs }}">
+        <swiper-item>
+          <image src="{{ item }}" mode="aspectFill" class="slide-image"></image>
+        </swiper-item>
+      </block>
+    </swiper>
+  </view>
+  <view class="franchisee-section">
+  <view class="franchisee-detail-section">
+    <view class="franchisee-imgNews">
+     <image src="{{franchiseeInfo.picture}}"></image>
+     <view class="franchisee-title">{{ franchiseeInfo.name }}</view>
+    </view>
+
+    <view class="franchisee-other-detail">
+      <view class="franchisee-phone" data-phone-num="{{ franchiseeInfo.phone }}" bindtap="makePhoneCall"><label class="ico-moon icon-phone"></label> {{ franchiseeInfo.phone }}</view>
+      <view class="franchisee-address" bindtap="clickFranchiseeAddress" data-lat="{{ franchiseeInfo.latitude }}" data-lng="{{ franchiseeInfo.longitude }}"><label class="ico-moon icon-location"></label> {{ franchiseeInfo.province_name + franchiseeInfo.city_name + franchiseeInfo.county_name + franchiseeInfo.address_detail }}</view>
+    </view>
+  </view>
+  </view>
+
+  <view class="franchisee-goods-coupon-container" wx:if="{{franchiseeInfo.coupon_list.length > 0}}">
+  <scroll-view scroll-x="true" style="height:80px;">
+   <view class='scroll-view-item' wx:for="{{franchiseeInfo.coupon_list}}" wx:if="{{item.type==0}}">
+    <view class="coupon-left">
+     <view class="coupon-price">￥{{item.value}}</view>
+      <view class="coupon-news">
+      <view class="con">{{item.title}}</view>
+     <view class="con">满{{item.condition}}可用</view>
+      </view>
+    </view>
+    <view class="coupon-right" data-id="{{item.id}}" bindtap='turnToCouponDetail'>领取</view>
+   </view>
+  <view class='scroll-view-item' wx:for="{{franchiseeInfo.coupon_list}}" wx:if="{{item.type==1}}">
+    <view class="coupon-left">
+     <view class="coupon-price">{{item.value}}折</view>
+      <view class="coupon-news">
+      <view class="con">{{item.title}}</view>
+     <view class="con">打折优惠</view>
+      </view>
+    </view>
+    <view class="coupon-right" data-id="{{item.id}}" bindtap='turnToCouponDetail'>领取</view>
+   </view>
+  </scroll-view>
+  </view>
+  <view class="franchisee-goods-content">
+   <view class="content-news">
+   <view class="con_des">
+    商家简介：<text class="franchisee-description">{{franchiseeInfo.description}}</text>
+   </view>
+
+
+   </view>
+   <view class="content-time">
+     <label>营业时间：</label>
+     <text class="franchisee-business-hours">{{franchiseeInfo.business_time_str}}</text>
+    </view>
+  </view>
+  <view class="franchisee-goods-list-container" style="margin-bottom:10px;" data-form='goods'>
+    <view  class="franchisee-goods-list-title">商品<text style="float:right;font-size:12px;cursor:pointer" data-form='goods' data-type='0' bindtap="turnToGoodsMore">查看更多></text></view>
+    <view wx:if="{{goodsList.length == 0 }}" class="franchisee-goods-empty-tip">暂无商品</view>
+    <view>
+      <view class="franchisee-goods-item" wx:for="{{ goodsList }}" data-id="{{item.form_data.id}}" catchtap="turnToGoodsDetail">
+        <image class="list-img" src="{{item.form_data.cover}}" mode="aspectFill"></image>
+        <view class="title-container">
+          <view class="title">{{item.form_data.title}}</view>
+          <view>
+            <text class="price">¥ {{item.form_data.price}}</text>
+            <text class="sales">销量：{{item.form_data.sales}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+   <view class="franchisee-goods-list-container" data-form="appointment">
+    <view  class="franchisee-goods-list-title">预约<text style="float:right;font-size:12px;cursor:pointer" data-form='appointment' data-type='1' bindtap="turnToGoodsMore">查看更多></text></view>
+    <view wx:if="{{ appointmentList.length == 0 }}" class="franchisee-goods-empty-tip">暂无预约</view>
+
+    <view>
+      <view class="franchisee-goods-item" wx:for="{{ appointmentList }}" data-id="{{item.form_data.id}}" catchtap="turnToGoodsDetail">
+        <image class="list-img" src="{{item.form_data.cover}}" mode="aspectFill"></image>
+        <view class="title-container">
+          <view class="title">{{item.form_data.title}}</view>
+          <view>
+            <text class="price">¥ {{item.form_data.price}}</text>
+            <text class="sales">销量：{{item.form_data.sales}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view wx:if="{{ !onBusiness }}" class="franchisee-tip-bar">商家休息</view>
+</view>

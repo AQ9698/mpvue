@@ -1,0 +1,96 @@
+<view class="app">
+<template name="zcSearch1">
+  <view class="element search {{data.customFeature.ifLocation?'another-style':''}}" style="{{data.style}}">
+    <view class="ico-moon icon-location location {{data.customFeature.ifLocation?'':'hide'}}" data-param="{{data.customFeature.ifLocation}}" catchtap="turnToSearchPage">全国</view>
+    <view class="search-input">
+       <icon size="14" type="search"></icon>
+       <view bindtap="turnToSearchPage" class="fakeSearch {{data.customFeature.searchObject.type=='goods-list'?'':'hide'}}" >{{data.content.placeholder}}</view>
+       <input data-compid="search1" class="{{data.customFeature.searchObject.type=='goods-list'?'hide':''}}" bindinput="bindSearchTextChange" name="input" placeholder="{{data.content.placeholder}}" confirm-type="search"/>
+       <view data-compid="search1"
+             data-listid="{{data.customFeature.searchObject.customFeature.id}}"
+             data-listtype="{{data.customFeature.searchObject.type}}"
+             data-form="{{data.customFeature.searchObject.customFeature.form}}"
+            class="search-btn" bindtap="searchList">搜索</view>
+    </view>
+  </view>
+</template>
+<view class="ele-container">
+  <template is="zcSearch1" data="{{data:search1}}"></template>
+</view><template name="zcFranchiseeList2">
+  <view class="element franchisee-list" style="{{data.style}}">
+    <view class="franchisee-title">
+      <view class="franchisee-location" data-compid="franchisee_list2" bindtap="tapFranchiseeLocation"><label class="ico-moon icon-location"></label> {{ data.location_address || '定位中...' }}</view>附近商家
+    </view>
+    <scroll-view class="scroll-ele"
+                 data-param="{{data.param}}"
+                 data-compid="franchisee_list2"
+                 data-type="franchisee-list"
+                 scroll-y="true"
+                 data-curpage="{{data.curpage}}"
+                 bindscrolltolower="franchiseeScrollFunc">
+      <view class="js-list-container" data-list-index="0">
+        <view class="franchisee-list-item background-ele router js-to-detail {{data.customFeature.mode == 1? 'double-franchisee-list': ''}} {{item.is_open == 0 ? 'not-open':''}} "
+              wx:for="{{data.franchisee_data}}" data-id="{{item.app_id}}" style="{{data.list_style}}" catchtap="turnToFranchiseeDetail">
+          <view class="franchisee-list-goods" style="height:{{data.customFeature.lineHeight}}px">
+          <view class="inner-content">
+            <text class="not-open-tip">休息中</text>
+            <view class="cart-goods-num" wx:if="{{ item.cart_goods_num != 0 }}">{{ item.cart_goods_num }}</view>
+            <image class="list-img" src="{{item.picture}}" style="{{data.img_style}}" mode="aspectFill"></image>
+            <view class="title-container" style="width: {{data.title_width.width}}">
+              <view class="title">{{item.name}}</view>
+              <view class="description">{{item.description}}</view>
+            </view>
+            <view class="distance">{{ item.distance }}</view>
+          </view>
+          </view>
+           <view class="discount-coupons">
+             <view class="coupons-cash" wx:if="{{item.coupon_list.best_subtract_value!=''}}">
+              <label>券</label>
+              进店领取{{item.coupon_list.best_subtract_value}}元优惠券
+             </view>
+             <view class="coupons-rebate" wx:if="{{item.coupon_list.best_discount!=''}}">
+             <label>折</label>
+             进店领取{{item.coupon_list.best_discount}}折优惠
+             </view>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+</template>
+<view class="ele-container">
+  <template is="zcFranchiseeList2" data="{{data:franchisee_list2}}"></template>
+</view>
+<template name="zcSuspension3">
+  <view class="element suspension"
+               data-compid="suspension3"
+               style="{{data.style}}bottom: {{data.suspension_bottom}}rpx;" >
+    <view class="" wx:for="{{data.content}}"
+          data-event-params="{{item.eventParams}}"
+          catchtap="{{item.eventHandler}}">
+      <view class="suspension-item diy" style="{{data.list_style}}">
+        <image style="width:{{item.customFeature.width}};height:{{item.customFeature.width}}" src="{{item.pic}}"></image>
+      </view>
+    </view>
+    <view>
+      <view class="suspension-item" data-type="service" wx:if="{{data.customFeature.appendComponent.service}}" style="{{data.list_style}}">
+        <icon class="ico-moon icon-service2 suspension-service">
+          <contact-button type="default-dark" size="20" session-from="suspension"></contact-button>
+        </icon>
+      </view>
+      <view class="suspension-item" data-router="myOrder" wx:if="{{data.customFeature.appendComponent.myOrder}}" catchtap="UserCenterTurnToPage" style="{{data.list_style}}">
+        <icon class="ico-moon icon-notebook"></icon>
+      </view>
+      <view class="suspension-item" data-router="shoppingCart" wx:if="{{data.customFeature.appendComponent.shoppingCart}}" catchtap="UserCenterTurnToPage" style="{{data.list_style}}">
+        <icon class="ico-moon icon-shoppingcart"></icon>
+      </view>
+      <view class="suspension-item" data-type="top" wx:if="{{false}}" style="{{data.list_style}}">
+        <icon class="ico-moon icon-top"></icon>
+      </view>
+    </view>
+  </view>
+</template>
+
+<template is="zcSuspension3" data="{{data:suspension3}}"></template>
+
+</view>

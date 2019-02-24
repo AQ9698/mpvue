@@ -1,0 +1,116 @@
+<view class="app">
+<template name="zcFormVessel1">
+  <form class="element form-vessel" data-form="{{data.form}}" style="{{data.style}}"
+        bindsubmit="submitForm"
+        data-compid="form_vessel1"
+        data-fieldinfo="{{data.field_info}}">
+    <template name="zcInputEle">
+  <block wx:if="{{data.segment_required}}">
+    <view class="element input-ele js-form-ele must" style="{{data.style}}">
+      <input type="text" placeholder="{{!!data.customFeature.placeholder? data.customFeature.placeholder: ''}}"
+             data-segment="{{data.customFeature.segment}}"
+             data-datakey="{{data.formCompid}}.form_data.{{data.customFeature.segment}}"
+             bindchange="inputChange"/>
+    </view>
+  </block>
+  <block wx:else>
+    <view class="element input-ele js-form-ele" style="{{data.style}}">
+      <input type="text" placeholder="{{!!data.customFeature.placeholder? data.customFeature.placeholder: ''}}"
+             data-segment="{{data.customFeature.segment}}"
+             data-datakey="{{data.formCompid}}.form_data.{{data.customFeature.segment}}"
+             bindchange="inputChange"/>
+    </view>
+  </block>
+</template>
+<view class="ele-container">
+  <template is="zcInputEle" data="{{data:data.content[0]}}"></template>
+</view>
+<template name="zcInputEle">
+  <block wx:if="{{data.segment_required}}">
+    <view class="element input-ele js-form-ele must" style="{{data.style}}">
+      <input type="text" placeholder="{{!!data.customFeature.placeholder? data.customFeature.placeholder: ''}}"
+             data-segment="{{data.customFeature.segment}}"
+             data-datakey="{{data.formCompid}}.form_data.{{data.customFeature.segment}}"
+             bindchange="inputChange"/>
+    </view>
+  </block>
+  <block wx:else>
+    <view class="element input-ele js-form-ele" style="{{data.style}}">
+      <input type="text" placeholder="{{!!data.customFeature.placeholder? data.customFeature.placeholder: ''}}"
+             data-segment="{{data.customFeature.segment}}"
+             data-datakey="{{data.formCompid}}.form_data.{{data.customFeature.segment}}"
+             bindchange="inputChange"/>
+    </view>
+  </block>
+</template>
+<view class="ele-container">
+  <template is="zcInputEle" data="{{data:data.content[1]}}"></template>
+</view>
+<template name="zcTextareaEle">
+  <block wx:if="{{data.segment_required}}">
+    <view class="element textarea-ele js-form-ele must" style="{{data.style}}">
+      <textarea placeholder="{{!!data.customFeature.placeholder ? data.customFeature.placeholder: ''}}"
+              data-segment="{{data.customFeature.segment}}"
+              data-datakey="{{data.formCompid}}.form_data.{{data.customFeature.segment}}"
+              bindinput="inputChange"/>
+    </view>
+  </block>
+  <block wx:else>
+    <view class="element textarea-ele js-form-ele" style="{{data.style}}">
+      <textarea placeholder="{{!!data.customFeature.placeholder ? data.customFeature.placeholder: ''}}"
+              data-segment="{{data.customFeature.segment}}"
+              data-datakey="{{data.formCompid}}.form_data.{{data.customFeature.segment}}"
+              bindinput="inputChange"/>
+    </view>
+  </block>
+</template>
+<view class="ele-container">
+  <template is="zcTextareaEle" data="{{data:data.content[2], detail_data: detail_data}}"></template>
+</view>
+<template name="zcFormButton">
+  <button class="button background-ele" style="{{data.style}}" form-type="submit">
+    {{data.content}}
+  </button>
+</template>
+<view class="ele-container">
+  <template is="zcFormButton" data="{{data:data.content[3]}}"></template>
+</view>
+
+  </form>
+</template>
+<view class="ele-container">
+  <template is="zcFormVessel1" data="{{data:form_vessel1}}"></template>
+</view>
+<template name="zcSuspension2">
+  <view class="element suspension"
+               data-compid="suspension2"
+               style="{{data.style}}bottom: {{data.suspension_bottom}}rpx;" >
+    <view class="" wx:for="{{data.content}}"
+          data-event-params="{{item.eventParams}}"
+          catchtap="{{item.eventHandler}}">
+      <view class="suspension-item diy" style="{{data.list_style}}">
+        <image style="width:{{item.customFeature.width}};height:{{item.customFeature.width}}" src="{{item.pic}}"></image>
+      </view>
+    </view>
+    <view>
+      <view class="suspension-item" data-type="service" wx:if="{{data.customFeature.appendComponent.service}}" style="{{data.list_style}}">
+        <icon class="ico-moon icon-service2 suspension-service">
+          <contact-button type="default-dark" size="20" session-from="suspension"></contact-button>
+        </icon>
+      </view>
+      <view class="suspension-item" data-router="myOrder" wx:if="{{data.customFeature.appendComponent.myOrder}}" catchtap="UserCenterTurnToPage" style="{{data.list_style}}">
+        <icon class="ico-moon icon-notebook"></icon>
+      </view>
+      <view class="suspension-item" data-router="shoppingCart" wx:if="{{data.customFeature.appendComponent.shoppingCart}}" catchtap="UserCenterTurnToPage" style="{{data.list_style}}">
+        <icon class="ico-moon icon-shoppingcart"></icon>
+      </view>
+      <view class="suspension-item" data-type="top" wx:if="{{false}}" style="{{data.list_style}}">
+        <icon class="ico-moon icon-top"></icon>
+      </view>
+    </view>
+  </view>
+</template>
+
+<template is="zcSuspension2" data="{{data:suspension2}}"></template>
+
+</view>
